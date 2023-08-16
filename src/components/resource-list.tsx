@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ITEMS } from "~/data/items";
 import { useState } from "react";
 import { handleSearch } from "~/lib/handle-search";
+import { extractDomain } from "~/lib/extract-domain";
 
 type ResourceListProps = {
   openSidebar: () => void;
@@ -20,12 +21,6 @@ function shuffle<T extends any[]>(array: T): T {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
-
-function extractDomain(url: string) {
-  const domainRegex = /^(?:https?:\/\/)?(?:www\.)?([^\/]+)/;
-  const match = url.match(domainRegex);
-  return match ? match[1] : null;
 }
 
 export function ResourceList(props: ResourceListProps) {
@@ -162,6 +157,7 @@ export function ResourceList(props: ResourceListProps) {
                   className={css({
                     p: "2.5",
                     textStyle: "sm",
+                    w: "full",
                   })}
                 >
                   <div
@@ -174,7 +170,7 @@ export function ResourceList(props: ResourceListProps) {
                     <span>
                       {itemGroup?.label} - {extractDomain(item.url)}
                     </span>
-                    <span>{item.author}</span>
+                    <span>{item.author.label}</span>
                   </div>
                   <h1
                     className={css({

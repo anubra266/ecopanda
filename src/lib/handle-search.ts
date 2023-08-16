@@ -9,7 +9,7 @@ const options = {
   ignoreFieldNorm: true,
   threshold: 0.3,
   minMatchCharLength: MIN_CHAR_LENGTH,
-  keys: ["title", "description", "url", "author", "tags"],
+  keys: ["title", "description", "url", "author", "tags", "group"],
 };
 
 export function handleSearch<T extends any[]>(items: T, query: string): T {

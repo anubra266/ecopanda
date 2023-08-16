@@ -8,8 +8,6 @@ import { ResourceList } from "~/components/resource-list";
 import { Resource } from "~/components/resource";
 
 export default function Home({ params }: { params: { resource?: string[] } }) {
-  const isHomeView = !params.resource;
-  const isGroupView = params.resource?.length === 1;
   const isItemView = params.resource?.length === 2;
   const [group, resource] = params.resource || [];
 

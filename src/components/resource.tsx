@@ -1,16 +1,25 @@
-import { css, cx } from "styled-system/css";
-import { flex } from "styled-system/patterns";
-import { button } from "styled-system/recipes";
+import { css } from "styled-system/css";
+import { flex, stack, wrap } from "styled-system/patterns";
+import { badge, button } from "styled-system/recipes";
 import { ITEMS } from "~/data/items";
 import { IoArrowBack } from "react-icons/io5";
+import { AiOutlineLink } from "react-icons/ai";
+import { useTheme } from "next-themes";
+import { extractDomain } from "~/lib/extract-domain";
 
 type ResourceProps = {
   resource: string;
 };
 
 export function Resource(props: ResourceProps) {
+  const { resolvedTheme } = useTheme();
   const resource = ITEMS.find((i) => i.id === props.resource);
-  if (resource)
+  if (resource) {
+    const cover =
+      resolvedTheme === "light" || !resource.thumbnail?._dark
+        ? resource.thumbnail?.base
+        : resource.thumbnail?._dark;
+
     return (
       <section
         className={flex({
@@ -68,14 +77,79 @@ export function Resource(props: ResourceProps) {
               px: "2.5",
               pt: "3",
               pb: "8",
+              gap: "8",
+              direction: "column",
             })}
           >
-            {resource.title}
+            {cover && (
+              <div
+                className={flex({
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+
+                  w: "full",
+                  minH: "60",
+                  mx: "auto",
+                  maxH: "96",
+                  maxW: { lg: "sm", "2xl": "xs" },
+                })}
+                style={{
+                  backgroundImage: `url(${cover})`,
+                }}
+              />
+            )}
+
+            <h1 className={css({ textStyle: "h1" })}>{resource.title}</h1>
+
+            <div className={stack({ textStyle: "sm", gap: "3" })}>
+              <span>
+                By:{" "}
+                <a
+                  className={css({ textDecoration: "underline" })}
+                  href={resource.author.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {resource.author.label}
+                </a>
+              </span>
+              <a
+                href={resource.url}
+                target="_blank"
+                rel="noreferrer"
+                className={flex({
+                  align: "center",
+                  gap: "1",
+                  color: "muted.foreground",
+                  textDecoration: { _hover: "underline" },
+                  fontWeight: "medium",
+                })}
+              >
+                <AiOutlineLink />
+                <span>{extractDomain(resource.url)}</span>
+              </a>
+            </div>
+
+            <ul className={wrap()}>
+              {resource.tags.map((tag) => (
+                <li key={tag} className={badge()}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+
+            <p
+              className={flex({
+                color: "muted.foreground",
+              })}
+            >
+              {resource.description}
+            </p>
           </div>
         </div>
       </section>
     );
-
+  }
   return (
     <div
       className={flex({

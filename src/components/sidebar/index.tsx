@@ -1,10 +1,10 @@
 "use client";
 
 import { css, cva, cx } from "styled-system/css";
-import { flex, stack, vstack } from "styled-system/patterns";
+import { flex, stack } from "styled-system/patterns";
 import { button } from "styled-system/recipes";
 import { IoClose } from "react-icons/io5";
-import { BsGithub, BsDiscord, BsTwitter } from "react-icons/bs";
+import { BsGithub, BsDiscord, BsTwitter, BsPlus } from "react-icons/bs";
 import { GROUPS } from "~/data/groups";
 import Link from "next/link";
 import { ITEMS } from "~/data/items";
@@ -63,9 +63,12 @@ export function Sidebar(props: {
               h: "16",
             })}
           >
-            <h1 className={css({ textStyle: "lg", fontWeight: "medium" })}>
+            <Link
+              href="/"
+              className={css({ textStyle: "lg", fontWeight: "medium" })}
+            >
               EcoPanda
-            </h1>
+            </Link>
             <button
               className={cx(
                 button({ variant: "ghost", size: "sm" }),
@@ -183,6 +186,11 @@ export const sidebarItem = cva({
 });
 
 const LINKS = [
+  {
+    label: "New Item",
+    icon: <BsPlus />,
+    href: "https://github.com/anubra266/ecopanda",
+  },
   {
     label: "Panda Docs",
     icon: (
