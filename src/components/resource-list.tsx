@@ -1,10 +1,12 @@
 import { css, cx } from "styled-system/css";
 import { flex } from "styled-system/patterns";
-import { button } from "styled-system/recipes";
+import { button, input } from "styled-system/recipes";
 import { IoSearch, IoMenu } from "react-icons/io5";
 import { GROUPS } from "~/data/groups";
 import Link from "next/link";
 import { ITEMS } from "~/data/items";
+import { useState } from "react";
+import { handleSearch } from "~/lib/handle-search";
 
 type ResourceListProps = {
   openSidebar: () => void;
@@ -21,15 +23,21 @@ function shuffle<T extends any[]>(array: T): T {
 }
 
 function extractDomain(url: string) {
-  const parsedUrl = new URL(url);
-  return parsedUrl.hostname;
+  const domainRegex = /^(?:https?:\/\/)?(?:www\.)?([^\/]+)/;
+  const match = url.match(domainRegex);
+  return match ? match[1] : null;
 }
 
 export function ResourceList(props: ResourceListProps) {
+  const [iseSearching, setIsSearching] = useState(false);
+  const [query, setQuery] = useState("");
+
   const group = GROUPS.find((g) => g.id === props.group);
   const items = group
     ? ITEMS.filter((i) => i.group === group.id)
     : shuffle(ITEMS);
+
+  const filteredItems = handleSearch(items, query);
 
   return (
     <section
@@ -76,14 +84,51 @@ export function ResourceList(props: ResourceListProps) {
           <h1 className={css({ textStyle: "md", fontWeight: "medium" })}>
             {group?.label ?? "Resources"}
           </h1>
-          <button
-            className={cx(
-              button({ variant: "ghost", size: "sm" }),
-              css({ ml: { md: "auto" } })
-            )}
+          <div
+            className={flex({
+              isolation: "isolate",
+              position: "relative",
+              ml: { md: "auto" },
+            })}
           >
-            <IoSearch />
-          </button>
+            <input
+              placeholder="Search..."
+              data-state={iseSearching ? "open" : "closed"}
+              className={cx(
+                "peer",
+                input(),
+                css({
+                  h: "8",
+                  opacity: { base: "0", _open: "1" },
+                })
+              )}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button
+              className={cx(
+                button({ variant: "ghost", size: "sm" }),
+                css({
+                  position: "absolute",
+                  right: "0",
+                  top: "0",
+                  zIndex: "2",
+                  h: "full",
+                  '.peer:is([data-state="open"]) ~ &': {
+                    borderLeftRadius: "0",
+                  },
+                })
+              )}
+              onClick={(e) => {
+                setIsSearching((prev) => !prev);
+                const input = e.currentTarget
+                  .previousSibling as HTMLInputElement;
+                input.focus();
+              }}
+            >
+              <IoSearch />
+            </button>
+          </div>
         </div>
       </header>
       <div
@@ -94,7 +139,7 @@ export function ResourceList(props: ResourceListProps) {
           py: "2",
         })}
       >
-        {items.map((item) => {
+        {filteredItems.map((item) => {
           const itemGroup = GROUPS.find((g) => g.id === item.group);
           return (
             <article key={item.id} className={css({ py: "1" })}>
