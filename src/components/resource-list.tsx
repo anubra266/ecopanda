@@ -29,7 +29,7 @@ export function ResourceList(props: ResourceListProps) {
 
   const group = GROUPS.find((g) => g.id === props.group);
   const items = group
-    ? ITEMS.filter((i) => i.group === group.id)
+    ? ITEMS.filter((i) => i.group.includes(group.id))
     : shuffle(ITEMS);
 
   const filteredItems = handleSearch(items, query);
@@ -135,11 +135,18 @@ export function ResourceList(props: ResourceListProps) {
         })}
       >
         {filteredItems.map((item) => {
-          const itemGroup = GROUPS.find((g) => g.id === item.group);
+          const itemGroups = GROUPS.filter((g) => item.group.includes(g.id));
+          const hrefGroup =
+            props.group && item.group.includes(props.group as any)
+              ? props.group
+              : item.group[0];
+
+          const href = `/${hrefGroup}/${item.id}`;
+
           return (
             <article key={item.id} className={css({ py: "1" })}>
               <Link
-                href={`/${item.group}/${item.id}`}
+                href={href}
                 className={cx(
                   button({
                     variant: item.id === props.resource ? "secondary" : "ghost",
@@ -168,7 +175,8 @@ export function ResourceList(props: ResourceListProps) {
                     })}
                   >
                     <span>
-                      {itemGroup?.label} - {extractDomain(item.url)}
+                      {itemGroups.map((i) => i.label).join(", ")} -{" "}
+                      {extractDomain(item.url)}
                     </span>
                     <span>{item.author.label}</span>
                   </div>

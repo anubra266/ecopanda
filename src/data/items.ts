@@ -2,7 +2,7 @@ import { Group } from "~/data/groups";
 
 interface Item {
   id: string;
-  group: Group;
+  group: Group[];
   title: string;
   description: string;
   url: string;
@@ -14,7 +14,7 @@ interface Item {
 export const ITEMS: Item[] = [
   {
     id: "pform-reset",
-    group: Group.Presets,
+    group: [Group.Presets],
     title: "Reset for form styles in CSS Panda",
     description:
       "An opinionated form reset designed to make form elements easy to style in CSS Panda. 'Twas Inspired by @tailwindcss/forms",
@@ -24,7 +24,7 @@ export const ITEMS: Item[] = [
   },
   {
     id: "shadow-panda",
-    group: Group.Presets,
+    group: [Group.Presets],
     title: "Shadow Panda",
     description:
       "Shadow Panda is an adoption of shadcn/ui, tailored specifically for developers utilizing Panda CSS as an alternative to Tailwind CSS.",
@@ -34,7 +34,7 @@ export const ITEMS: Item[] = [
   },
   {
     id: "park-ui",
-    group: Group.Presets,
+    group: [Group.Presets],
     title: "Park UI",
     description:
       "Beautifully designed components built with Ark UI and Panda CSS.",
@@ -47,7 +47,7 @@ export const ITEMS: Item[] = [
   },
   {
     id: "parkpandacss-preset-discord",
-    group: Group.Presets,
+    group: [Group.Presets],
     title: "Panda CSS preset for Discord branding",
     description: "A preset for Panda CSS that contains Discord's branding",
     url: "https://github.com/NurMarvin/pandacss-preset-discord",
@@ -56,7 +56,7 @@ export const ITEMS: Item[] = [
   },
   {
     id: "pandacss-preset-typography",
-    group: Group.Presets,
+    group: [Group.Presets],
     title: "PandaCSS preset for typography",
     description:
       "A 🐼 PandaCSS typography preset inspired by the TailwindCSS typography plugin",
@@ -66,12 +66,21 @@ export const ITEMS: Item[] = [
   },
   {
     id: "pandacss-preset-radix-colors",
-    group: Group.Presets,
+    group: [Group.Presets],
     title: "PandaCSS preset for Radix Colors",
     description: "Brings Radix Colors to 🐼 PandaCSS",
     url: "https://github.com/milandekruijf/pandacss-preset-radix-colors",
     author: { label: "milandekruijf", url: "github.com/milandekruijf" },
     tags: ["radix", "colors"],
+  },
+  {
+    id: "tw2panda",
+    group: [Group.Tools, Group.Extensions],
+    title: "tw2panda",
+    description: "Easily migrate code from tailwind to Panda CSS",
+    url: "https://github.com/astahmer/tw2panda",
+    author: { label: "astahmer", url: "twitter.com/astahmer" },
+    tags: ["tailwind", "cli", "vscode"],
   },
 ];
 

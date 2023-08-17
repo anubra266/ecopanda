@@ -107,8 +107,8 @@ export function Sidebar(props: {
                 })}
               >
                 {GROUPS.map((group) => {
-                  const itemsCount = ITEMS.filter(
-                    (i) => i.group === group.id
+                  const itemsCount = ITEMS.filter((i) =>
+                    i.group.includes(group.id)
                   )?.length;
 
                   return (
