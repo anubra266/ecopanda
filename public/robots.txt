@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https:/ecopanda.dev
+
+# Sitemaps
+Sitemap: https:/ecopanda.dev/sitemap.xml
