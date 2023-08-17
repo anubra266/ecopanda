@@ -6,7 +6,7 @@ import { ThemeProvider } from "./theme-provider";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ecopanda.vercel.app"),
+  metadataBase: new URL("https://ecopanda.dev"),
   title: {
     default: "EcoPanda",
     template: "%s | EcoPanda",
@@ -17,11 +17,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ecopanda.vercel.app",
+    url: "https://ecopanda.dev",
     description: "The Panda CSS Ecosystem",
   },
   twitter: {
-    // card: "summary_large_image",
     creator: "@anubra266",
   },
 };
