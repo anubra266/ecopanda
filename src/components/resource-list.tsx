@@ -5,7 +5,7 @@ import { IoSearch, IoMenu } from "react-icons/io5";
 import { GROUPS } from "~/data/groups";
 import Link from "next/link";
 import { ITEMS } from "~/data/items";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { handleSearch } from "~/lib/handle-search";
 import { extractDomain } from "~/lib/extract-domain";
 
@@ -28,9 +28,8 @@ export function ResourceList(props: ResourceListProps) {
   const [query, setQuery] = useState("");
 
   const group = GROUPS.find((g) => g.id === props.group);
-  const items = group
-    ? ITEMS.filter((i) => i.group.includes(group.id))
-    : shuffle(ITEMS);
+  const feed = useMemo(() => shuffle(ITEMS), []);
+  const items = group ? ITEMS.filter((i) => i.group.includes(group.id)) : feed;
 
   const filteredItems = handleSearch(items, query);
 
