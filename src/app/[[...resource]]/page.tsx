@@ -1,50 +1,57 @@
-"use client";
+import HomeContent from "~/app/[[...resource]]/content";
+import { Metadata, ResolvingMetadata } from "next";
+import { GROUPS } from "~/data/groups";
+import { ITEMS } from "~/data/items";
 
-import { css } from "styled-system/css";
-import { Sidebar } from "~/components/sidebar";
-import { useState } from "react";
-import { flex } from "styled-system/patterns";
-import { ResourceList } from "~/components/resource-list";
-import { Resource } from "~/components/resource";
+type Props = {
+  params: { resource?: string[] };
+};
 
-export default function Home({ params }: { params: { resource?: string[] } }) {
-  const isItemView = params.resource?.length === 2;
-  const [group, resource] = params.resource || [];
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const [_group, _item] = params.resource || [];
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const group = GROUPS.find((g) => g.id === _group);
+  const item = ITEMS.find((i) => i.id === _item);
 
-  return (
-    <>
-      <Sidebar
-        group={group}
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      />
-      <main className={flex({ flex: "1" })}>
-        <div
-          data-hidden={isItemView ? "" : undefined}
-          className={css({
-            w: { base: "full", lg: "96" },
-            borderRightWidth: { lg: "1px" },
-            "&[data-hidden]": { display: { base: "none", lg: "block" } },
-          })}
-        >
-          <ResourceList
-            group={group}
-            resource={resource}
-            openSidebar={() => setIsSidebarOpen(true)}
-          />
-        </div>
-        <div
-          data-hidden={!isItemView ? "" : undefined}
-          className={flex({
-            flex: "1",
-            "&[data-hidden]": { display: { base: "none", lg: "flex" } },
-          })}
-        >
-          <Resource resource={resource} />
-        </div>
-      </main>
-    </>
-  );
+  const getTitle = () => {
+    if (!_group) return "Resources";
+    if (!_item) return group?.label;
+    return item?.title;
+  };
+
+  const getDescription = () => {
+    if (!_group) return "The Panda CSS Ecosystem";
+    if (!_item) return `${group?.label} in the Panda CSS Ecosystem`;
+    return item?.description;
+  };
+
+  const ogImage = `/api/og?_group=${_group}&_item=${_item}`;
+
+  return {
+    metadataBase: new URL("https://ecopanda.dev"),
+    title: `${getTitle()} | EcoPanda`,
+    description: getDescription(),
+    keywords: ["Panda CSS", "Components"],
+    manifest: "/site.webmanifest",
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: "https://ecopanda.dev",
+      title: `${getTitle()} | EcoPanda`,
+      description: getDescription(),
+      images: [ogImage],
+    },
+    twitter: {
+      creator: "@anubra266",
+      title: `${getTitle()} | EcoPanda`,
+      description: getDescription(),
+      images: [ogImage],
+      creatorId: "anubra266",
+      card: "summary_large_image",
+    },
+  };
+}
+
+export default function Home({ params }: Props) {
+  return <HomeContent params={params} />;
 }
