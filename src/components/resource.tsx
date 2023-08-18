@@ -106,7 +106,7 @@ export function Resource(props: ResourceProps) {
                 By:{" "}
                 <a
                   className={css({ textDecoration: "underline" })}
-                  href={resource.author.url}
+                  href={sanitizeUrl(resource.author.url)}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -114,7 +114,7 @@ export function Resource(props: ResourceProps) {
                 </a>
               </span>
               <a
-                href={resource.url}
+                href={sanitizeUrl(resource.url)}
                 target="_blank"
                 rel="noreferrer"
                 className={flex({
@@ -191,4 +191,14 @@ export function Resource(props: ResourceProps) {
       </span>
     </div>
   );
+}
+
+function sanitizeUrl(url: string) {
+  url = url.trim().replace(/^\/+|\/+$/g, "");
+
+  if (/^https?:\/\//i.test(url)) {
+    return url.replace(/^http:/i, "https:");
+  } else {
+    return "https://" + url;
+  }
 }
