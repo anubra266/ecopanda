@@ -4,11 +4,11 @@ import { ITEMS } from "~/data/items";
 
 export const runtime = "edge";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
-  const _group = searchParams.get("_group");
-  const _item = searchParams.get("_item");
+export async function GET(
+  _: Request,
+  { params }: { params: { resource?: string[] } }
+) {
+  const [_group, _item] = params.resource || [];
 
   const group = GROUPS.find((g) => g.id === _group);
   const item = ITEMS.find((i) => i.id === _item);

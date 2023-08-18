@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return item?.description;
   };
 
-  const ogImage = `/api/og?_group=${_group}&_item=${_item}`;
+  const ogImage = `/api/og/${[_group, _item].filter(Boolean).join("/")}`;
 
   return {
     metadataBase: new URL("https://ecopanda.dev"),
