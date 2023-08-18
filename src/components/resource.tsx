@@ -6,19 +6,21 @@ import { IoArrowBack } from "react-icons/io5";
 import { AiOutlineLink } from "react-icons/ai";
 import { useTheme } from "next-themes";
 import { extractDomain } from "~/lib/extract-domain";
+import Link from "next/link";
 
 type ResourceProps = {
-  resource: string;
+  group: string;
+  item: string;
 };
 
 export function Resource(props: ResourceProps) {
   const { resolvedTheme } = useTheme();
-  const resource = ITEMS.find((i) => i.id === props.resource);
-  if (resource) {
+  const item = ITEMS.find((i) => i.id === props.item);
+  if (item) {
     const cover =
-      resolvedTheme === "light" || !resource.thumbnail?._dark
-        ? resource.thumbnail?.base
-        : resource.thumbnail?._dark;
+      resolvedTheme === "light" || !item.thumbnail?._dark
+        ? item.thumbnail?.base
+        : item.thumbnail?._dark;
 
     return (
       <section
@@ -56,12 +58,12 @@ export function Resource(props: ResourceProps) {
               gap: "2",
             })}
           >
-            <button
+            <Link
+              href={`/${props.group}`}
               className={button({ variant: "ghost", size: "sm" })}
-              onClick={() => history.back()}
             >
               <IoArrowBack />
-            </button>
+            </Link>
           </div>
         </header>
         <div
@@ -100,7 +102,7 @@ export function Resource(props: ResourceProps) {
               />
             )}
 
-            <h1 className={css({ textStyle: "h1" })}>{resource.title}</h1>
+            <h1 className={css({ textStyle: "h1" })}>{item.title}</h1>
 
             <div
               className={stack({
@@ -112,15 +114,15 @@ export function Resource(props: ResourceProps) {
                 By:{" "}
                 <a
                   className={css({ textDecoration: "underline" })}
-                  href={sanitizeUrl(resource.author.url)}
+                  href={sanitizeUrl(item.author.url)}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {resource.author.label}
+                  {item.author.label}
                 </a>
               </span>
               <a
-                href={sanitizeUrl(resource.url)}
+                href={sanitizeUrl(item.url)}
                 target="_blank"
                 rel="noreferrer"
                 className={flex({
@@ -132,12 +134,12 @@ export function Resource(props: ResourceProps) {
                 })}
               >
                 <AiOutlineLink />
-                <span>{extractDomain(resource.url)}</span>
+                <span>{extractDomain(item.url)}</span>
               </a>
             </div>
 
             <ul className={wrap()}>
-              {resource.tags.map((tag) => (
+              {item.tags.map((tag) => (
                 <li key={tag} className={badge()}>
                   {tag}
                 </li>
@@ -149,7 +151,7 @@ export function Resource(props: ResourceProps) {
                 color: "muted.foreground",
               })}
             >
-              {resource.description}
+              {item.description}
             </p>
           </div>
         </div>

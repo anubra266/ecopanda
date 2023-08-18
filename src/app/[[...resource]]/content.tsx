@@ -45,7 +45,7 @@ export default function HomeContent({
             "&[data-hidden]": { display: { base: "none", lg: "flex" } },
           })}
         >
-          <Resource resource={item} />
+          <Resource group={group} item={item} />
         </div>
       </main>
     </>

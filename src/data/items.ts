@@ -46,7 +46,7 @@ export const ITEMS: Item[] = [
     },
   },
   {
-    id: "parkpandacss-preset-discord",
+    id: "pandacss-preset-discord",
     group: [Group.Presets],
     title: "Panda CSS preset for Discord branding",
     description: "A preset for Panda CSS that contains Discord's branding",
