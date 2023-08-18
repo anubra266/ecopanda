@@ -82,6 +82,20 @@ export const ITEMS: Item[] = [
     author: { label: "astahmer", url: "twitter.com/astahmer" },
     tags: ["tailwind", "cli", "vscode"],
   },
+  {
+    id: "animated-pandacss",
+    group: [Group.Presets],
+    title: "Animated PandaCSS",
+    description: "Use Animate.css with Panda CSS",
+    url: "https://github.com/anubra266/animated-pandacss",
+    author: { label: "anubra266", url: "twitter.com/anubra266" },
+    tags: ["animate.css", "animations"],
+    thumbnail: {
+      base: "https://github.com/anubra266/animated-pandacss/assets/30869823/059aa86d-3a0f-4633-b7c6-98aefb20d705",
+      _dark:
+        "https://github.com/anubra266/animated-pandacss/assets/30869823/68d809b1-1ef8-4a17-a180-ecacdf33516a",
+    },
+  },
 ];
 
 //*------------- ------------- ------------- ------------- ------------- ------------- -------------
