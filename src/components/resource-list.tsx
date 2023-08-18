@@ -24,12 +24,17 @@ function shuffle<T extends any[]>(array: T): T {
 }
 
 export function ResourceList(props: ResourceListProps) {
-  const [iseSearching, setIsSearching] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [query, setQuery] = useState("");
 
   const group = GROUPS.find((g) => g.id === props.group);
   const feed = useMemo(() => shuffle(ITEMS), []);
-  const items = group ? ITEMS.filter((i) => i.group.includes(group.id)) : feed;
+  const groupItems =
+    group &&
+    ITEMS.filter((i) => i.group.includes(group.id)).sort((a, b) =>
+      a.title > b.title ? 1 : -1
+    );
+  const items = groupItems ?? feed;
 
   const filteredItems = handleSearch(items, query);
 
@@ -87,19 +92,29 @@ export function ResourceList(props: ResourceListProps) {
           >
             <input
               placeholder="Search..."
-              data-state={iseSearching ? "open" : "closed"}
+              data-state={isSearching ? "open" : "closed"}
               className={cx(
                 "peer",
                 input(),
                 css({
                   h: "8",
                   opacity: { base: "0", _open: "1" },
+                  _open: {
+                    animationName: "fadeInRight",
+                    animationDuration: "0.4s",
+                  },
                 })
               )}
+              onBlur={(e) => {
+                if (isSearching) {
+                  setIsSearching(false);
+                }
+              }}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
             <button
+              disabled={isSearching}
               className={cx(
                 button({ variant: "ghost", size: "sm" }),
                 css({
@@ -114,10 +129,12 @@ export function ResourceList(props: ResourceListProps) {
                 })
               )}
               onClick={(e) => {
-                setIsSearching((prev) => !prev);
-                const input = e.currentTarget
-                  .previousSibling as HTMLInputElement;
-                input.focus();
+                if (!isSearching) {
+                  setIsSearching(true);
+                  const input = e.currentTarget
+                    .previousSibling as HTMLInputElement;
+                  input.focus();
+                }
               }}
             >
               <IoSearch />

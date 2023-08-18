@@ -70,6 +70,7 @@ export function Resource(props: ResourceProps) {
             flex: "1",
             px: { base: "2.5", xl: "5" },
             py: "2",
+            animationName: "fadeIn",
           })}
         >
           <div
@@ -101,7 +102,12 @@ export function Resource(props: ResourceProps) {
 
             <h1 className={css({ textStyle: "h1" })}>{resource.title}</h1>
 
-            <div className={stack({ textStyle: "sm", gap: "3" })}>
+            <div
+              className={stack({
+                textStyle: "sm",
+                gap: "3",
+              })}
+            >
               <span>
                 By:{" "}
                 <a

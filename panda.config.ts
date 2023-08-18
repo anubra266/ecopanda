@@ -8,7 +8,7 @@ export default defineConfig({
 
   jsxFramework: "react",
 
-  presets: ["@shadow-panda/preset"],
+  presets: ["animated-pandacss", "@shadow-panda/preset"],
 
   include: ["./src/**/*.{js,jsx,ts,tsx}"],
 

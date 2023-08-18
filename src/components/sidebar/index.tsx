@@ -67,7 +67,7 @@ export function Sidebar(props: {
               href="/"
               className={css({ textStyle: "lg", fontWeight: "medium" })}
             >
-              EcoPanda
+              🐼 EcoPanda
             </Link>
             <button
               className={cx(
