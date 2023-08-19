@@ -29,14 +29,17 @@ export async function GET(
   const group = GROUPS.find((g) => g.id === _group);
   const item = ITEMS.find((i) => i.id === _item);
 
+  const isGroup = !!group && !item;
+  const groupCount = ITEMS.filter((i) =>
+    i.group.includes(_group as any)
+  ).length;
+
   const getTitle = () => {
-    if (!_group) return;
     if (!_item) return group?.label;
     return item?.title;
   };
 
   const getDescription = () => {
-    if (!_group) return "The Panda CSS Ecosystem";
     if (!_item) return `${group?.label} in the Panda CSS Ecosystem`;
     return item?.description;
   };
@@ -78,7 +81,7 @@ export async function GET(
                 fontWeight: 500,
               }}
             >
-              Abraham A
+              With ❤️ from @anubra266
             </span>
           </div>
           <div
@@ -109,25 +112,118 @@ export async function GET(
           ...rootStyles,
           letterSpacing: "-0.05em",
           alignItems: "center",
-          justifyContent: "center",
+          padding: 100,
         }}
       >
         <div
           style={{
+            flex: "1",
+            height: "100%",
             display: "flex",
             flexDirection: "column",
-            padding: 50,
-            gap: 25,
+            justifyContent: "space-between",
+            paddingTop: 30,
+            paddingBottom: 30,
           }}
         >
-          <div style={{ fontSize: 40 }}>EcoPanda</div>
-          {title && <div style={{ fontSize: 100 }}>{title}</div>}
-          <div style={{ fontSize: 20 }}>{getDescription()}</div>
-          {item && (
-            <div style={{ display: "flex", fontSize: 15 }}>
-              By: {item.author.label}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 30,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                fontWeight: 900,
+                fontSize: 30,
+                gap: 8,
+              }}
+            >
+              🐼 <span>Ecopanda</span>
             </div>
-          )}
+            <div
+              style={{
+                color: "#F4F5F5FF",
+                fontSize: 70,
+                display: "flex",
+                flexDirection: "column",
+                gap: 40,
+                fontWeight: 900,
+              }}
+            >
+              {getTitle()}
+            </div>
+            <span style={{ color: "#A1A1AAFF", fontSize: 30 }}>
+              {getDescription()}
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+              }}
+            >
+              {isGroup ? (
+                <span
+                  style={{
+                    fontSize: 25,
+                    height: 40,
+                    width: 40,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "50%",
+                    border: "solid 2px white",
+                  }}
+                >
+                  <group.icon />
+                </span>
+              ) : (
+                <img
+                  src={item?.author.avatar}
+                  alt="Creator Avatar"
+                  style={{
+                    width: 40,
+                    borderRadius: "50%",
+                    border: "solid 1px orange",
+                  }}
+                />
+              )}
+              {isGroup ? (
+                <span
+                  style={{
+                    fontSize: 25,
+                    fontWeight: 500,
+                  }}
+                >
+                  {groupCount}{" "}
+                  {group.label.endsWith("s") && groupCount === 1
+                    ? group.label.slice(0, -1)
+                    : group.label}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: 25,
+                    fontWeight: 500,
+                  }}
+                >
+                  @{item?.author.label}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     ),
