@@ -123,6 +123,19 @@ export const ITEMS: Item[] = [
     },
     tags: ["animate.css", "animations"],
   },
+  {
+    id: "panda-transitions-css",
+    group: [Group.Presets],
+    title: "Panda Transitions.css",
+    description: "Drop-in CSS transitions from transition.css for Panda CSS.",
+    url: "https://github.com/anubra266/panda-transitions-css",
+    author: {
+      label: "anubra266",
+      url: "twitter.com/anubra266",
+      avatar: "https://github.com/anubra266.png?size=200",
+    },
+    tags: ["transition.css", "transitions"],
+  },
 ];
 
 //*------------- ------------- ------------- ------------- ------------- ------------- -------------
