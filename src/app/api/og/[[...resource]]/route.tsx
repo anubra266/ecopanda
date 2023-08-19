@@ -44,8 +44,6 @@ export async function GET(
     return item?.description;
   };
 
-  const title = getTitle();
-
   if (!group && !item)
     return new ImageResponse(
       (
