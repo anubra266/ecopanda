@@ -1,5 +1,5 @@
 import { css } from "styled-system/css";
-import { flex, stack, wrap } from "styled-system/patterns";
+import { circle, flex, stack, wrap } from "styled-system/patterns";
 import { badge, button } from "styled-system/recipes";
 import { ITEMS } from "~/data/items";
 import { IoArrowBack } from "react-icons/io5";
@@ -7,6 +7,7 @@ import { AiOutlineLink } from "react-icons/ai";
 import { useTheme } from "next-themes";
 import { extractDomain } from "~/lib/extract-domain";
 import Link from "next/link";
+import Image from "next/image";
 
 type ResourceProps = {
   group: string;
@@ -110,17 +111,21 @@ export function Resource(props: ResourceProps) {
                 gap: "3",
               })}
             >
-              <span>
-                By:{" "}
-                <a
-                  className={css({ textDecoration: "underline" })}
-                  href={sanitizeUrl(item.author.url)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {item.author.label}
-                </a>
-              </span>
+              <a
+                className={flex({ textDecoration: "underline", gap: "2" })}
+                href={sanitizeUrl(item.author.url)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src={item.author.avatar}
+                  width="24"
+                  height="24"
+                  alt="Creator Image"
+                  className={circle()}
+                />
+                {item.author.label}
+              </a>
               <a
                 href={sanitizeUrl(item.url)}
                 target="_blank"
@@ -166,6 +171,8 @@ export function Resource(props: ResourceProps) {
         flex: "1",
         direction: "column",
         color: "muted.foreground",
+
+        animationName: "zoomIn",
       })}
     >
       <svg
