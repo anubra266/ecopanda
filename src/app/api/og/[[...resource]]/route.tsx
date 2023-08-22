@@ -12,7 +12,7 @@ const rootStyles = {
   ...DIMENSIONS,
   display: "flex",
   backgroundImage:
-    "radial-gradient(circle at 25px 25px, #27272AFF 2%, transparent 0%), radial-gradient(circle at 75px 75px, #27272AFF 2%, transparent 0%)",
+    "radial-gradient(circle at 25px 25px, #E5868689 2%, transparent 0%), radial-gradient(circle at 75px 75px, #E5868689 2%, transparent 0%)",
   backgroundSize: "100px 100px",
   backgroundColor: "hsl(240 10% 3.9%)",
   color: "white",
@@ -153,7 +153,15 @@ export async function GET(
             >
               {getTitle()}
             </div>
-            <span style={{ color: "#A1A1AAFF", fontSize: 30 }}>
+            <span
+              style={{
+                color: "#A1A1AAFF",
+                fontSize: 30,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}
+            >
               {getDescription()}
             </span>
           </div>
