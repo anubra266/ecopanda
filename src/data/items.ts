@@ -34,7 +34,7 @@ export const ITEMS: Item[] = [
       "Shadow Panda is an adoption of shadcn/ui, tailored specifically for developers utilizing Panda CSS as an alternative to Tailwind CSS.",
     url: "https://github.com/kumaaa-inc/shadow-panda",
     author: {
-      label: "kumaaa",
+      label: "nanopx",
       url: "github.com/nanopx",
       avatar: "https://github.com/nanopx.png?size=200",
     },
