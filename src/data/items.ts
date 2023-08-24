@@ -35,8 +35,8 @@ export const ITEMS: Item[] = [
     url: "https://github.com/kumaaa-inc/shadow-panda",
     author: {
       label: "kumaaa",
-      url: "github.com/kumaaa",
-      avatar: "https://github.com/kumaaa-inc.png?size=200",
+      url: "github.com/nanopx",
+      avatar: "https://github.com/nanopx.png?size=200",
     },
     tags: ["shadcn/ui", "radix"],
   },
