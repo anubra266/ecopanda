@@ -150,6 +150,15 @@ export function ResourceList(props: ResourceListProps) {
           py: "2",
         })}
       >
+        {!items.length && (
+          <div
+            className={css({
+              textAlign: "center",
+            })}
+          >
+            No <b>{group?.label}</b> yet. Check again later
+          </div>
+        )}
         {filteredItems.map((item) => {
           const itemGroups = GROUPS.filter((g) => item.group.includes(g.id));
           const hrefGroup =
