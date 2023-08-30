@@ -111,21 +111,27 @@ export function Resource(props: ResourceProps) {
                 gap: "3",
               })}
             >
-              <a
-                className={flex({ textDecoration: "underline", gap: "2" })}
-                href={sanitizeUrl(item.author.url)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img
-                  src={item.author.avatar}
-                  width="24"
-                  height="24"
-                  alt="Creator Image"
-                  className={circle()}
-                />
-                {item.author.label}
-              </a>
+              <div className={stack({ direction: "row" })}>
+                {item.authors.map((author, i) => (
+                  <a
+                    key={i}
+                    className={flex({ textDecoration: "underline", gap: "2" })}
+                    href={sanitizeUrl(author.url)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={author.avatar}
+                      width="24"
+                      height="24"
+                      alt="Creator Image"
+                      className={circle()}
+                    />
+                    {author.label}
+                  </a>
+                ))}
+              </div>
+
               <a
                 href={sanitizeUrl(item.url)}
                 target="_blank"

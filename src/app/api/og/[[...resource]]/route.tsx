@@ -169,18 +169,18 @@ export async function GET(
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
+              gap: 10,
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-              }}
-            >
-              {isGroup ? (
+            {isGroup ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
                 <span
                   style={{
                     fontSize: 25,
@@ -195,18 +195,6 @@ export async function GET(
                 >
                   <group.icon />
                 </span>
-              ) : (
-                <img
-                  src={item?.author.avatar}
-                  alt="Creator Avatar"
-                  style={{
-                    width: 40,
-                    borderRadius: "50%",
-                    border: "solid 1px orange",
-                  }}
-                />
-              )}
-              {isGroup ? (
                 <span
                   style={{
                     fontSize: 25,
@@ -218,17 +206,38 @@ export async function GET(
                     ? group.label.slice(0, -1)
                     : group.label}
                 </span>
-              ) : (
-                <span
+              </div>
+            ) : (
+              item?.authors.map((author, i) => (
+                <div
+                  key={i}
                   style={{
-                    fontSize: 25,
-                    fontWeight: 500,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    justifyContent: "flex-start",
                   }}
                 >
-                  @{item?.author.label}
-                </span>
-              )}
-            </div>
+                  <img
+                    src={author.avatar}
+                    alt="Creator Avatar"
+                    style={{
+                      width: 40,
+                      borderRadius: "50%",
+                      border: "solid 1px orange",
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: 25,
+                      fontWeight: 500,
+                    }}
+                  >
+                    @{author.label}
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

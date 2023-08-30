@@ -194,7 +194,9 @@ export function ResourceList(props: ResourceListProps) {
                       {itemGroups.map((i) => i.label).join(", ")} -{" "}
                       {extractDomain(item.url)}
                     </span>
-                    <span>{item.author.label}</span>
+                    {item.authors.map((author, i) => (
+                      <span key={i}>{author.label}</span>
+                    ))}
                   </div>
                   <h1
                     className={css({
