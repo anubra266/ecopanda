@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/server";
 import { GROUPS } from "~/data/groups";
 import { ITEMS } from "~/data/items";
+import { handleTagsSearch } from "~/lib/handle-search";
 
 export const runtime = "edge";
 const DIMENSIONS = {
@@ -30,21 +31,34 @@ export async function GET(
   const item = ITEMS.find((i) => i.id === _item);
 
   const isGroup = !!group && !item;
-  const groupCount = ITEMS.filter((i) =>
-    i.group.includes(_group as any)
-  ).length;
+  const isTag = _group === "tags";
+
+  const getGroupCount = () => {
+    if (isTag) return handleTagsSearch(ITEMS, _item).length;
+    return ITEMS.filter((i) => i.group.includes(_group as any)).length;
+  };
 
   const getTitle = () => {
+    if (_group === "tags") return `${_item.toLocaleUpperCase()} tag`;
     if (!_item) return group?.label;
     return item?.title;
   };
 
   const getDescription = () => {
+    if (_group === "tags")
+      return `Resources with ${_item} tag in the Panda CSS Ecosystem`;
     if (!_item) return `${group?.label} in the Panda CSS Ecosystem`;
     return item?.description;
   };
 
-  if (!group && !item)
+  const getGroupLabel = () => {
+    if (!isGroup && !isTag) return;
+    const label = isTag ? "Resources" : group!.label;
+    if (label.endsWith("s") && getGroupCount() === 1) return label.slice(0, -1);
+    return label;
+  };
+
+  if (!group && !item && _group !== "tags")
     return new ImageResponse(
       (
         <div
@@ -173,7 +187,7 @@ export async function GET(
               gap: 10,
             }}
           >
-            {isGroup ? (
+            {isGroup || isTag ? (
               <div
                 style={{
                   display: "flex",
@@ -181,30 +195,29 @@ export async function GET(
                   gap: 10,
                 }}
               >
-                <span
-                  style={{
-                    fontSize: 25,
-                    height: 40,
-                    width: 40,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "50%",
-                    border: "solid 2px white",
-                  }}
-                >
-                  <group.icon />
-                </span>
+                {isGroup && (
+                  <span
+                    style={{
+                      fontSize: 25,
+                      height: 40,
+                      width: 40,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "50%",
+                      border: "solid 2px white",
+                    }}
+                  >
+                    <group.icon />
+                  </span>
+                )}
                 <span
                   style={{
                     fontSize: 25,
                     fontWeight: 500,
                   }}
                 >
-                  {groupCount}{" "}
-                  {group.label.endsWith("s") && groupCount === 1
-                    ? group.label.slice(0, -1)
-                    : group.label}
+                  {getGroupCount()} {getGroupLabel()}
                 </span>
               </div>
             ) : (

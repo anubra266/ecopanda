@@ -1,4 +1,4 @@
-import { css } from "styled-system/css";
+import { css, cx } from "styled-system/css";
 import { circle, flex, stack, wrap } from "styled-system/patterns";
 import { badge, button } from "styled-system/recipes";
 import { ITEMS } from "~/data/items";
@@ -7,7 +7,6 @@ import { AiOutlineLink } from "react-icons/ai";
 import { useTheme } from "next-themes";
 import { extractDomain } from "~/lib/extract-domain";
 import Link from "next/link";
-import Image from "next/image";
 
 type ResourceProps = {
   group: string;
@@ -151,9 +150,9 @@ export function Resource(props: ResourceProps) {
 
             <ul className={wrap()}>
               {item.tags.map((tag) => (
-                <li key={tag} className={badge()}>
+                <Link key={tag} href={`/tags/${tag}`} className={badge()}>
                   {tag}
-                </li>
+                </Link>
               ))}
             </ul>
 

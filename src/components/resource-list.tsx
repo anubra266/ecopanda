@@ -5,8 +5,8 @@ import { IoSearch, IoMenu } from "react-icons/io5";
 import { GROUPS } from "~/data/groups";
 import Link from "next/link";
 import { ITEMS } from "~/data/items";
-import { useMemo, useState } from "react";
-import { handleSearch } from "~/lib/handle-search";
+import { useState } from "react";
+import { handleSearch, handleTagsSearch } from "~/lib/handle-search";
 import { extractDomain } from "~/lib/extract-domain";
 
 type ResourceListProps = {
@@ -23,20 +23,25 @@ function shuffle<T extends any[]>(array: T): T {
   return array;
 }
 
+const feed = shuffle(ITEMS);
+
 export function ResourceList(props: ResourceListProps) {
   const [isSearching, setIsSearching] = useState(false);
   const [query, setQuery] = useState("");
 
-  const group = GROUPS.find((g) => g.id === props.group);
-  const feed = useMemo(() => shuffle(ITEMS), []);
-  const groupItems =
-    group &&
-    ITEMS.filter((i) => i.group.includes(group.id)).sort((a, b) =>
-      a.title > b.title ? 1 : -1
-    );
-  const items = groupItems ?? feed;
+  const _group = props.group ?? "feed";
+  const group = GROUPS.find((g) => g.id === _group);
 
-  const filteredItems = handleSearch(items, query);
+  const getItems = () => {
+    if (_group === "tags") return handleTagsSearch(ITEMS, props.resource);
+    const groupItems =
+      group &&
+      ITEMS.filter((i) => i.group.includes(group.id)).sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
+    return groupItems ?? feed;
+  };
+  const items = getItems();
 
   return (
     <section
@@ -80,8 +85,14 @@ export function ResourceList(props: ResourceListProps) {
           >
             <IoMenu />
           </button>
-          <h1 className={css({ textStyle: "md", fontWeight: "medium" })}>
-            {group?.label ?? "Resources"}
+          <h1
+            className={css({
+              textStyle: "md",
+              fontWeight: "medium",
+              textTransform: "capitalize",
+            })}
+          >
+            {group?.label ?? _group}
           </h1>
           <div
             className={flex({
@@ -159,14 +170,15 @@ export function ResourceList(props: ResourceListProps) {
             No <b>{group?.label}</b> yet. Check again later
           </div>
         )}
-        {filteredItems.map((item) => {
+        {handleSearch(items, query).map((item) => {
           const itemGroups = GROUPS.filter((g) => item.group.includes(g.id));
-          const hrefGroup =
-            props.group && item.group.includes(props.group as any)
-              ? props.group
-              : item.group[0];
+          const getHrefGroup = () => {
+            if (_group === "tags") return item.group[0];
+            if (item.group.includes(_group as any)) return _group;
+            return _group;
+          };
 
-          const href = `/${hrefGroup}/${item.id}`;
+          const href = `/${getHrefGroup()}/${item.id}`;
 
           return (
             <article key={item.id} className={css({ py: "1" })}>

@@ -1,5 +1,5 @@
 import HomeContent from "~/app/[[...resource]]/content";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { GROUPS } from "~/data/groups";
 import { ITEMS } from "~/data/items";
 
@@ -14,13 +14,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = ITEMS.find((i) => i.id === _item);
 
   const getTitle = () => {
-    if (!_group) return "Resources";
+    if (!_group || _group === "feed") return "Feed";
+    if (_group === "tags") return `${_item.toLocaleUpperCase()} tag`;
     if (!_item) return group?.label;
     return item?.title;
   };
 
   const getDescription = () => {
-    if (!_group) return "The Panda CSS Ecosystem";
+    if (!_group || _group === "feed") return "The Panda CSS Ecosystem";
+    if (_group === "tags")
+      return `Resources with ${_item} tag in the Panda CSS Ecosystem`;
     if (!_item) return `${group?.label} in the Panda CSS Ecosystem`;
     return item?.description;
   };
