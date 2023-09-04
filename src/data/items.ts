@@ -154,6 +154,21 @@ export const ITEMS: Item[] = [
     ],
     tags: ["transition.css", "transitions"],
   },
+  {
+    id: "panda-css-htmx",
+    group: [Group.Templates],
+    title: "Panda-css + htmx + bun",
+    description: "showcases the possibility of using htmx + panda-css. This way you have less client code and a fully typed component based application with a style system which is typed as well.",
+    url: "https://github.com/aacevski/panda-css-htmx",
+    authors: [
+      {
+        label: "aacevski",
+        url: "twitter.com/aacevski",
+        avatar: "https://github.com/aacevski.png?size=200",
+      },
+    ],
+    tags: ["html", "bun"],
+  },
 ];
 
 //*------------- ------------- ------------- ------------- ------------- ------------- -------------
