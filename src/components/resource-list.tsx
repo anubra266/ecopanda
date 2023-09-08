@@ -113,7 +113,7 @@ export function ResourceList(props: ResourceListProps) {
           >
             <input
               placeholder="Search..."
-              data-state={isSearching ? "open" : "closed"}
+              data-state={isSearching || query ? "open" : "closed"}
               className={cx(
                 "peer",
                 input(),
@@ -126,11 +126,8 @@ export function ResourceList(props: ResourceListProps) {
                   },
                 })
               )}
-              onBlur={(e) => {
-                if (isSearching) {
-                  setIsSearching(false);
-                }
-              }}
+              onFocus={(e) => setIsSearching(true)}
+              onBlur={(e) => setIsSearching(false)}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -151,7 +148,6 @@ export function ResourceList(props: ResourceListProps) {
               )}
               onClick={(e) => {
                 if (!isSearching) {
-                  setIsSearching(true);
                   const input = e.currentTarget
                     .previousSibling as HTMLInputElement;
                   input.focus();
