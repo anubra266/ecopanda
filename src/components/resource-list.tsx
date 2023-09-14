@@ -8,8 +8,6 @@ import { ITEMS } from "~/data/items";
 import { useState } from "react";
 import { handleSearch, handleTagsSearch } from "~/lib/handle-search";
 import { extractDomain } from "~/lib/extract-domain";
-import { usePathname, useRouter } from "next/navigation";
-import { useQueryString } from "~/lib/use-query-string";
 
 type ResourceListProps = {
   openSidebar: () => void;
@@ -29,15 +27,7 @@ const feed = shuffle(ITEMS);
 
 export function ResourceList(props: ResourceListProps) {
   const [isSearching, setIsSearching] = useState(false);
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const { query, createQueryString } = useQueryString();
-
-  const setQuery = (value: string) => {
-    const q = createQueryString("query", value);
-    router.push(pathname + createQueryString("query", value));
-  };
+  const [query, setQuery] = useState("");
 
   const _group = props.group ?? "feed";
   const group = GROUPS.find((g) => g.id === _group);
@@ -184,10 +174,7 @@ export function ResourceList(props: ResourceListProps) {
             return _group;
           };
 
-          const href = `/${getHrefGroup()}/${item.id}${createQueryString(
-            "query",
-            query
-          )}`;
+          const href = `/${getHrefGroup()}/${item.id}`;
 
           return (
             <article key={item.id} className={css({ py: "1" })}>
