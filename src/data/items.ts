@@ -170,6 +170,22 @@ export const ITEMS: Item[] = [
     ],
     tags: ["htmx", "bun"],
   },
+  {
+    id: "panda-monorepo",
+    group: [Group.Templates],
+    title: "panda-monorepo",
+    description:
+      "Example of a panda monorepo usage with a consuming app and multiple ui-lib providers",
+    url: "https://github.com/astahmer/panda-monorepo",
+    authors: [
+      {
+        label: "astahmer",
+        url: "twitter.com/astahmer",
+        avatar: "https://github.com/astahmer.png?size=200",
+      },
+    ],
+    tags: ["monorepo"],
+  },
 ];
 
 //*------------- ------------- ------------- ------------- ------------- ------------- -------------
