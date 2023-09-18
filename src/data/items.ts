@@ -186,6 +186,22 @@ export const ITEMS: Item[] = [
     ],
     tags: ["monorepo"],
   },
+  {
+    id: "panda-preset-unique-utilities",
+    group: [Group.Presets],
+    title: "panda-preset-unique-utilities",
+    description:
+      "About The base preset utilities for Panda CSS but with unique classNames",
+    url: "https://github.com/brendon1555/panda-preset-unique-utilities",
+    authors: [
+      {
+        label: "brendon1555",
+        url: "twitter.com/brendon1555",
+        avatar: "https://github.com/brendon1555.png?size=200",
+      },
+    ],
+    tags: ["utilities", "classnames"],
+  },
 ];
 
 //*------------- ------------- ------------- ------------- ------------- ------------- -------------
