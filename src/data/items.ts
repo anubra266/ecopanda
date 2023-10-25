@@ -187,12 +187,12 @@ export const ITEMS: Item[] = [
     tags: ["monorepo"],
   },
   {
-    id: "panda-preset-unique-utilities",
+    id: "panda-monorepo-setup",
     group: [Group.Presets],
-    title: "panda-preset-unique-utilities",
+    title: "panda-monorepo-setup",
     description:
       "About The base preset utilities for Panda CSS but with unique classNames",
-    url: "https://github.com/brendon1555/panda-preset-unique-utilities",
+    url: "https://github.com/brendon1555/panda-monorepo-setup",
     authors: [
       {
         label: "brendon1555",
@@ -201,6 +201,21 @@ export const ITEMS: Item[] = [
       },
     ],
     tags: ["utilities", "classnames"],
+  },
+  {
+    id: "panda-monorepo-setup",
+    group: [Group.Presets],
+    title: "panda-monorepo-setup",
+    description: "Panda monorepo setup examples",
+    url: "https://github.com/astahmer/panda-monorepo-setup",
+    authors: [
+      {
+        label: "astahmer",
+        url: "twitter.com/astahmer_dev",
+        avatar: "https://github.com/astahmer.png?size=200",
+      },
+    ],
+    tags: ["monorepo", "design-system", "component"],
   },
 ];
 
