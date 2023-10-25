@@ -187,12 +187,12 @@ export const ITEMS: Item[] = [
     tags: ["monorepo"],
   },
   {
-    id: "panda-monorepo-setup",
+    id: "panda-preset-unique-utilities",
     group: [Group.Presets],
-    title: "panda-monorepo-setup",
+    title: "panda-preset-unique-utilities",
     description:
       "About The base preset utilities for Panda CSS but with unique classNames",
-    url: "https://github.com/brendon1555/panda-monorepo-setup",
+    url: "https://github.com/brendon1555/panda-preset-unique-utilities",
     authors: [
       {
         label: "brendon1555",
