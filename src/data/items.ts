@@ -191,7 +191,7 @@ export const ITEMS: Item[] = [
     group: [Group.Presets],
     title: "panda-preset-unique-utilities",
     description:
-      "About The base preset utilities for Panda CSS but with unique classNames",
+      "The base preset utilities for Panda CSS but with unique classNames",
     url: "https://github.com/brendon1555/panda-preset-unique-utilities",
     authors: [
       {
@@ -201,6 +201,22 @@ export const ITEMS: Item[] = [
       },
     ],
     tags: ["utilities", "classnames"],
+  },
+  {
+    id: "panda-cx-deduplicator",
+    group: [Group.Tools],
+    title: "panda-cx-deduplicator",
+    description:
+      "A drop in replacement for the PandaCSS `cx` function with deduplication of atomic classes",
+    url: "https://github.com/brendon1555/panda-cx-deduplicator",
+    authors: [
+      {
+        label: "brendon1555",
+        url: "twitter.com/brendon1555",
+        avatar: "https://github.com/brendon1555.png?size=200",
+      },
+    ],
+    tags: ["utilities", "classnames", "cx", "atomic"],
   },
   {
     id: "panda-monorepo-setup",
